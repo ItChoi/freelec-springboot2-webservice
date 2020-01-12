@@ -34,6 +34,14 @@ repositories {
 // 프로젝트 개발에 필요한 의존성 선언
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
+    // 롬복 사용을 위한 compile 코드 추가 후 Gradle 탭에서 새로고침 눌러주기.
+    compile('org.projectlombok:lombok')
+    // 스프링 부트용 Spring Data JPA 추상화 라이브러리, 스프링 부트 버전에 맞춰 자동으로 JPA 관련 라이브러리 버전을 관리해준다.
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    // 인메모리 관계형 데이터베이스, 별도의 설치 필요 없이 의존성만으로 관리 가능, 메모리 실행이기 때문에 재시작 시 초기화 된다. 이를 이용하여 테스트 용도로 많이 사용
+    compile('com.h2database:h2')
+    // 머스테치 스타터
+    compile('org.springframework.boot:spring-boot-starter-mustache')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     /*testCompile group: 'junit', name: 'junit', version: '4.12'*/
 }
