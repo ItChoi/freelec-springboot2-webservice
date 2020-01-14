@@ -45,4 +45,27 @@
   - compile('org.springframework.boot:spring-boot-starter-mustache')  
 - 머스테치 파일의 위치는 기본적으로 src/main/resources/templates
   
-    
+  
+- 꿀팁
+  - index.js에서 var index = { }; 객체 안에 함수를 넣는 이유가 뭘까?
+    - 브라우저의 스코프는 공용 공간이기 때문에 나중에 다른 js파일과 함수가 겹칠 경우 나중에 로딩 된것이 덮어 쓰게 되는 경우가 있다. 따라서 index.js만의 유효 범위를 만들어 사용
+  - 절대 경로(/)로 바로 시작하는데, 스프링 부트는 기본적으로 src/main/resources/static에 위치한 JS, CSS, 이미지 등 정적 파일들은 URL에서 /로 설정된다.
+    - 그래서 다음과 같이 위치하면 위치에 맞게 호출 가능
+      1. src/main/resources/static/js/..      (http://도메인/js/..)
+      2. src/main/resources/static/css/..     (http://도메인/css/..)
+      3. src/main/resources/static/image/..   (http://도메인/image/..)    
+- {{#post}}: posts라는 List 순회, {{변수명}}: List에서 뽑아낸 객체의 필드 사용
+- 규모가 있는 플젝에서 데이터 조회는 FK의 조인, 복잡한 조건 등으로 @Entity클래스만으로 처리가 어려워 조회용 프레임워크를 추가로 사용한다.
+  - 조회용 프레임워크
+    - querydsl, jooq, MyBatis, 등
+    - 조회는 위 3 가지 프레임워크 중 하나를 통해 조회, 수정/삭제/등록은 SpringDataJpa로 진행한다. 조졸두님 추천은 querydsl
+    - QueryDsl 추천 이유
+      1. 타입 안정성이 보장된다.
+        - 단순한 문자열로 쿼리 생성이 아니라, 메소드를 기반으로 쿼리를 생성하기에 오타나 존재하지 않는 컬럼명 IDE에서 자동 검출 가능 (MyBatis는 지원하지 않는다.)
+      2. 국내 많은 회사에서 사용 중
+      3. 레퍼런스가 많다.
+        - 많은 회사와 개발자들이 사용하는 만큼 자료가 많다.
+        
+          
+  
+      

@@ -2,11 +2,16 @@ package com.jojoldu.book.springboot.service.posts;
 
 import com.jojoldu.book.springboot.domain.posts.Posts;
 import com.jojoldu.book.springboot.domain.posts.PostsRepository;
+import com.jojoldu.book.springboot.web.dto.PostsListResponseDto;
 import com.jojoldu.book.springboot.web.dto.PostsResponseDto;
 import com.jojoldu.book.springboot.web.dto.PostsSaveRequestDto;
 import com.jojoldu.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 // final이선언된 모든 필드를 인자 값으로 하는 생성자를 롬복의 @RequiredArgsConstructor가 대신 생성하여 스프링의 @Autowired를 사용할 필요가 없다.
 // 생성자를 안 쓰고 롬복 어노테이션을 사용한 이유는 간단하다. - 해당 클래스의 의존성 관계가 변경될 때 마다 생성자 코드를 수정하는 번거로움 해결
@@ -25,8 +30,8 @@ public class PostsService {
     // JPA의 핵심 내용은 엔티티가 영속성 컨텍스트에 포함되어 있냐 아니냐로 갈린다.
     public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id: " + id));
-
         posts.update(requestDto.getTitle(), requestDto.getContent());
+        postsRepository.save(posts);
 
         return id;
     }
@@ -35,6 +40,20 @@ public class PostsService {
         Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id: " + id));
 
         return new PostsResponseDto(entity);
+    }
+
+    // 트랜잭션 옵션 readOnly = true를 주면 트랜잭션 범위는 유지하되, 조회 기능만 남겨두어 조회 속도가 개선되기에 등록/수정/삭제 기능이 없는 경우 사용 추천
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                    .map(PostsListResponseDto::new)
+                    .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
+        postsRepository.delete(posts);
     }
 
 }
