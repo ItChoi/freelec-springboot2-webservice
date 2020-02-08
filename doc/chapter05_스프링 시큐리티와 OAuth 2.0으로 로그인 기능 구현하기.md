@@ -57,4 +57,21 @@
     - 스프링 부트에서는 application-xxx.properties로 파일 생성 시 xxx라는 이름의 profile이 생싱되어 이를 통해 관리 가능
       - 즉, profile=xxx 라는 식으로 호출 시 해당 properties 설정들을 가져올 수 있다.
       - spring.profiles.include=xxx를 application.properties에 등록 시 xxx 설정을 가져올 수 있다.             
-       
+    - .gitignore에 파일을 등록해도 노출된다면, Git의 캐시 문제 떄문이다. 캐시를 지울 필요가 있다.
+
+  - 구글 로그인 연동하기
+    - 스프링 시큐리티 설정
+      - 의존성 추가
+        - compile("org.springframework.boot:spring-boot-starter-oauth2-client") 
+          - 소셜 로그인 등 클라이언트 입장에서 소셜 기능 구현 시 필요한 의존성 추가
+          - spring-security-oauth2-client와 spring-security-oauth2-jose를 기본으로 관리
+      - @EnableWebSecurity: Spring Security 설정들을 활성화 해준다.
+      
+- 네이버 로그인 
+  - 네이버 API 등록
+    - [https://developers.naver.com/apps/#/register?api=nvlogin](https://developers.naver.com/apps/#/register?api=nvlogin)
+    - 애플리케이션 이름 작성, [회원이름, 이메일, 프로필 사진 필수 클릭]
+    - PC 웹 선택 후 서비스 URL (http://localhost:8080/) 및 Callback URL (http://localhost:8080/login/oauth2/code/naver)
+    - 등록 버튼 누르기
+  - ClientID와 ClientSecret 생성 후 application-oauth.properties에 등록
+  

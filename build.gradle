@@ -43,5 +43,10 @@ dependencies {
     // 머스테치 스타터
     compile('org.springframework.boot:spring-boot-starter-mustache')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    /*testCompile group: 'junit', name: 'junit', version: '4.12'*/
+    // 스프링 시큐리티 관련 의존성, 소셜 로그인 등 클라이언트 입장에서 소셜 기능 구현 시 필요한 의존성
+    compile("org.springframework.boot:spring-boot-starter-oauth2-client")
+    // 세션 저장소로 데이터베이스를 사용하기 위한 의존성
+    compile('org.springframework.session:spring-session-jdbc')
+    // 스프링 시큐리티 테스트를 위한 여러 도구를 지원하는 spring-security-test
+    testCompile("org.springframework.security:spring-security-test")
 }

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 // JPA Auditing 활성화
-@EnableJpaAuditing
+// @EnableJpaAuditing   // 테스트 사용 시 이것도 읽어 예외가 발생한다. 테스트 시에는 @Entity가 없는 상태에서 진행하지만, 이 애노테이션은 최소 하나의 @Entity가 있어야 한다. 따라서 테스트를 위해 분리 필요
 // 스프링의 자동 설정, 스프링 Bean 읽기와 생성을 모두 자동으로 설정된다.
 // @SpringBootApplication 위치부터 설정을 읽어가기 때문에 이 클래스는 항상 프로젝트 최상단에 위치해야 한다.
 @SpringBootApplication
